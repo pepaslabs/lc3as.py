@@ -14,6 +14,10 @@ is described in [Appendix A](docs/appendix-a.pdf),
 which is freely downloadable from the
 [publisher's website](https://highered.mheducation.com/sites/0072467509/student_view0/appendices_a__b__c__d____e.html).
 
+The LC-3 is [16-bit](https://en.wikipedia.org/wiki/16-bit_computing),
+[word-addressable](https://en.wikipedia.org/wiki/Word-addressable),
+and [little-endian](https://en.wikipedia.org/wiki/Endianness).
+
 
 ## Usage
 
