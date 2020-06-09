@@ -42,9 +42,15 @@ Display this help message:
   lc3as.py --help
 ```
 
+## Binary output
+
+![](.media/binary.png)
+
+
 ## Binascii output
 
 ![](.media/binascii.png)
+
 
 ## Hex output
 
@@ -54,11 +60,13 @@ Compare to the binary output:
 
 ![](.media/hexdump.png)
 
+
 ## Lexer output
 
 The lexer's token output can be viewed as JSON:
 
 ![](.media/lex.png)
+
 
 ## Parser output
 
@@ -69,9 +77,11 @@ The parser's output can be viewed as JSON:
 This allows you to leverage `lc3as.py` as the backend for a custom assembler frontend!
 Create your own custom assembler syntax!
 
+
 ## Accepting JSON input
 
 ![](.media/json-input.png)
+
 
 ## Test failure output
 
