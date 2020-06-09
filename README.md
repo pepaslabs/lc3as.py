@@ -74,11 +74,12 @@ The parser's output can be viewed as JSON:
 
 ![](.media/parse.png)
 
-This allows you to leverage `lc3as.py` as the backend for a custom assembler frontend!
-Create your own custom assembler syntax!
-
 
 ## Accepting JSON input
+
+The fact that this assembler accepts JSON as input allows you to leverage `lc3as.py`
+as the backend for your own custom assembler frontend!
+Create your own custom assembler syntax!
 
 ![](.media/json-input.png)
 
