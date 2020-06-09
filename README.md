@@ -131,7 +131,7 @@ mkdir -p ~/opt/lc3tools-0.12/bin
 cp -a lc3* ~/opt/lc3tools-0.12/bin/
 mkdir -p ~/bin
 cd ~/bin
-ln -sf ~/opt/lc3tools-0.12/bin/* .
+ln -sf ~/opt/lc3tools-0.12/bin/lc3{as,convert,sim,sim-tk} .
 ```
 
 This will place symlinks to the LC-3 tools into `~/bin`, which needs to be in your `$PATH`.
