@@ -25,7 +25,7 @@ and [little-endian](https://en.wikipedia.org/wiki/Endianness).
 
 ```
 $ ./lc3as.py --help
-lc3as.py: an assembler for the LC-3 ficticious machine.
+lc3as.py: an assembler for the LC-3 fictitious machine.
 
 Assemble foo.s (creates foo.bin, binary format):
   lc3as.py foo.s

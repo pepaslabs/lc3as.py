@@ -21,7 +21,7 @@ import os
 
 def usage(fd):
     exe = os.path.basename(sys.argv[0])
-    fd.write('%s: an assembler for the LC-3 ficticious machine.\n' % exe)
+    fd.write('%s: an assembler for the LC-3 fictitious machine.\n' % exe)
     fd.write('\n')
     fd.write('Assemble foo.s (creates foo.bin, binary format):\n')
     fd.write("  %s foo.s\n" % exe)
