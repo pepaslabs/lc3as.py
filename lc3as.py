@@ -49,8 +49,8 @@ def usage(fd):
     fd.write('\n')
     fd.write('Assume input has already been parsed (JSON):\n')
     fd.write('(Useful for developing your own custom assembler syntax)\n')
+    fd.write("  cat foo.s | %s --parse | %s --json-input --binary > foo.bin\n" % (exe, exe))
     fd.write("  ./my-custom-frontend foo.s | %s --json-input --binary > foo.bin\n" % exe)
-    fd.write("  %s --parse foo.s | %s --json-input --binary > foo.bin\n" % (exe, exe))
     fd.write('\n')
     fd.write('Display this help message:\n')
     fd.write("  %s -h\n" % exe)
@@ -1353,7 +1353,21 @@ def run_job(job):
         fd.close()
 
     if job.json_input:
-        statements = json.loads(text)
+        # Skip lexing and parsing and injest pre-parsed JSON input.
+        # Useful for writing your own custom assembly syntax.
+        js_statements = json.loads(text)
+        statements = []
+        for js_dict in js_statements:
+            obj = Obj(js_dict)
+            if 'operands' in obj:
+                opands = []
+                for js_opand in obj.operands:
+                    opand = Obj(js_opand)
+                    opands.append(opand)
+                    continue
+                obj.operands = opands
+            statements.append(obj)
+            continue
     else:
         lines = [line.rstrip() for line in text.splitlines()]
 
