@@ -84,6 +84,13 @@ Create your own custom assembler syntax!
 ![](.media/json-input.png)
 
 
+## Symbol table
+
+The assembler can be halted after the 1st pass to view the symbol table:
+
+![](.media/symbols.png)
+
+
 ## Test failure output
 
 If a test fails, `diff` is run to highlight the relevant difference in output:
