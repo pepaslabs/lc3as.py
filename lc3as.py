@@ -338,7 +338,7 @@ def parse_operands_SR_BaseR_offset6(tokens):
     return parse_operands_DR_BaseR_offset6(tokens)
 
 def parse_operands_trapvector8(tokens):
-    """Attempts to parse operands of [DR, BaseR, offset6]."""
+    """Attempts to parse operands of [trapvect8]."""
     failure = None
     if len(tokens) != 1:
         return failure
@@ -771,7 +771,7 @@ def parse_line(tokens, linenum):
         return []
     elif len(tokens) > 1 and tokens[0].token_type == 'LABEL':
         return parse_line(tokens[:1], linenum) + parse_line(tokens[1:], linenum)
-    elif len(tokens) > 2 \
+    elif len(tokens) > 1 \
         and tokens[0].token_type == 'IDENTIFIER' \
         and tokens[1].token_type in ['OPCODE', 'DIRECTIVE']:
         # The textbook allows labels which don't end in ':'.  If the first
@@ -1051,8 +1051,8 @@ def generate_BR(statement, symtable, pc):
     # a naked BR should be interpreted as a BRnzp.
     if n == 0 and z == 0 and p == 0:
         n = 1; z = 1; p = 1
-    mins = opcode << 12 | n << 11 | z << 10 | p << 9 | pcoffset9 << 0
-    return mins
+    bmins = opcode << 12 | n << 11 | z << 10 | p << 9 | pcoffset9 << 0
+    return bmins
 
 def generate_JMP(statement):
     """Generates a JMP binary machine instruction."""
