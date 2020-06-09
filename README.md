@@ -1,13 +1,14 @@
 # lc3as.py
 
-An assembler for the [LC-3](https://en.wikipedia.org/wiki/Little_Computer_3) fictitious computer.
+An [assembler](https://en.wikipedia.org/wiki/Assembly_language#Assembler)
+for the [LC-3](https://en.wikipedia.org/wiki/Little_Computer_3) fictitious computer.
 
 The LC-3 is described in the book
 _Introduction to Computing Systems: From Bits and Gates to C and Beyond_
 ([2nd edition](https://www.amazon.com/dp/0072467509))
 ([3rd edition](https://www.amazon.com/dp/126042474X)).
 
-The ISA,
+The [ISA](https://en.wikipedia.org/wiki/Instruction_set_architecture),
 which consists of only 15 instructions,
 is described in [Appendix A](docs/appendix-a.pdf),
 which is freely downloadable from the
