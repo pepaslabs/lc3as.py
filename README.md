@@ -87,6 +87,10 @@ The parser's output can be viewed as JSON:
 
 ![](.media/parse.png)
 
+The lexer is [regex](https://en.wikipedia.org/wiki/Regular_expression)-based,
+and the parser implementation is [recursive-descent](https://en.wikipedia.org/wiki/Recursive_descent_parser).
+This approach is described in Gary Bernhardt's
+[_A Compiler from Scratch_](https://www.destroyallsoftware.com/screencasts/catalog/a-compiler-from-scratch).
 
 ## Accepting JSON input
 
