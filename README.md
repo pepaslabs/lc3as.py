@@ -18,6 +18,8 @@ The LC-3 is [16-bit](https://en.wikipedia.org/wiki/16-bit_computing),
 [word-addressable](https://en.wikipedia.org/wiki/Word-addressable),
 and [little-endian](https://en.wikipedia.org/wiki/Endianness).
 
+![](.media/isa.png)
+
 
 ## Usage
 
