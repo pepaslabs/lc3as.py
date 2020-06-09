@@ -44,38 +44,37 @@ Display this help message:
 
 ## Binascii output
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/binascii.png)
+![](.media/binascii.png)
 
 ## Hex output
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/hex.png)
+![](.media/hex.png)
 
 Compare to the binary output:
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/hexdump.png)
+![](.media/hexdump.png)
 
 ## Lexer output
 
 The lexer's token output can be viewed as JSON:
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/lex.png)
+![](.media/lex.png)
 
 ## Parser output
 
 The parser's output can be viewed as JSON:
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/parse.png)
+![](.media/parse.png)
 
 This allows you to leverage `lc3as.py` as the backend for a custom assembler frontend!
 Create your own custom assembler syntax!
 
 ## Accepting JSON input
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/json-input.png)
+![](.media/json-input.png)
 
 ## Test failure output
 
 If a test fails, `diff` is run to highlight the relevant difference in output:
 
-![](https://raw.githubusercontent.com/pepaslabs/lc3as.py/master/.media/test.png)
-
+![](.media/test.png)
