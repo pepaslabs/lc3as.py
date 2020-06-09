@@ -135,3 +135,9 @@ ln -sf ~/opt/lc3tools-0.12/bin/* .
 ```
 
 This will place symlinks to the LC-3 tools into `~/bin`, which needs to be in your `$PATH`.
+
+Before building the LC-3 tools, you may need to install some dependencies.  On Debian:
+
+```
+sudo apt-get install flex wish
+```
