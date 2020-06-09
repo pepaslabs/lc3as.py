@@ -139,5 +139,7 @@ This will place symlinks to the LC-3 tools into `~/bin`, which needs to be in yo
 Before building the LC-3 tools, you may need to install some dependencies.  On Debian:
 
 ```
-sudo apt-get install flex wish
+sudo apt-get install flex wish libncurses-dev
 ```
+
+Note: on your distro, `wish` may be provided by `tk`.
