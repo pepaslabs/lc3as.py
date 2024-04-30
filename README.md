@@ -10,7 +10,7 @@ _Introduction to Computing Systems: From Bits and Gates to C and Beyond_
 
 The [ISA](https://en.wikipedia.org/wiki/Instruction_set_architecture),
 which consists of only 15 instructions,
-is described in [Appendix A](docs/appendix-a.pdf),
+is described in [Appendix A](doc/appendix-a.pdf),
 which is freely downloadable from the
 [publisher's website](https://highered.mheducation.com/sites/0072467509/student_view0/appendices_a__b__c__d____e.html).
 
