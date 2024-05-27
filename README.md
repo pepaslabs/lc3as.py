@@ -158,4 +158,4 @@ Note: on your distro, `wish` may be provided by `tk`.
 
 ## See also
 
-[pepaslabs/lc-3b-tools](https://github.com/pepaslabs/lc-3b-tools), a disassembler and assembler I wrote (in C99) for the LC-3b.
+[pepaslabs/lc-3b-tools](https://github.com/pepaslabs/lc-3b-tools), a disassembler I wrote (in C99) for the LC-3b.
