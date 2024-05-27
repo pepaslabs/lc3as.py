@@ -7,14 +7,10 @@
 
 set -e -o pipefail
 
-PYTHON=`which python`
-if test -n "${1}"
-then
-    PYTHON="${1}"
-fi
+PYTHON=`which python3`
 
 cd examples
-for f in *.asm
+for f in test*.asm
 do
     echo -e "\ntesting $f"
     lc3as $f

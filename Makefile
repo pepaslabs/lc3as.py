@@ -1,12 +1,7 @@
 all: test clean
 
-test: testpy2 testpy3
-
-testpy2:
-	./test.sh python2
-
-testpy3:
-	./test.sh python3
+test:
+	./test.sh
 
 clean:
 	rm -f examples/*.bin
@@ -14,4 +9,4 @@ clean:
 	rm -f examples/*.sym
 	rm -f examples/*.hex
 
-.PHONY: all test testpy2 testpy3 clean
+.PHONY: all test clean

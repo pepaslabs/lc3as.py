@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # lc3as.py: an assembler for the LC-3.
 
@@ -14,7 +14,7 @@
 # Computing: From Bits and Gates to C and Beyond, 2nd Edition", by Patt and
 # Patel.
 
-# This script is compatible with Python 2 and Python 3.
+# Note: This script is compatible with Python 2 and Python 3.
 
 import sys
 import os
