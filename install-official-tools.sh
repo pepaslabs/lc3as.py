@@ -22,10 +22,11 @@ cd lc3tools
 ./configure --installdir ~/opt/lc3tools-0.12
 make install
 
-cd ~/opt/lc3tools-0.12
+mkdir -p ~/opt/lc3tools-0.12/doc
+cd ~/opt/lc3tools-0.12/doc
 curl --fail --location --remote-name https://highered.mheducation.com/sites/dl/free/0072467509/104652/LC3_unix.pdf
 curl --fail --location --remote-name https://highered.mheducation.com/sites/dl/free/0072467509/104691/pat67509_appa.pdf
 
 mkdir -p ~/bin
 cd ~/bin
-ln -sf ~/opt/lc3tools-0.12/* .
+ln -sf ~/opt/lc3tools-0.12/lc3{as,convert,sim,sim-tk} .

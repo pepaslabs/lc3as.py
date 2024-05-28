@@ -23,7 +23,7 @@ def usage(fd):
     exe = os.path.basename(sys.argv[0])
     fd.write('%s: an assembler for the LC-3 fictitious machine.\n' % exe)
     fd.write('\n')
-    fd.write('Assemble foo.s (creates foo.bin, binary format):\n')
+    fd.write('Assemble foo.s (creates foo.obj, binary format):\n')
     fd.write("  %s foo.s\n" % exe)
     fd.write('\n')
     fd.write('Assemble standard input into standard output (binascii format):\n')
@@ -35,7 +35,7 @@ def usage(fd):
     fd.write('\n')
     fd.write('Assemble standard input into standard output (forced binary format):\n')
     fd.write('Warning: this will spew garbage into your terminal, so redirect the output:\n')
-    fd.write("  cat foo.s | %s --binary > foo.bin\n" % exe)
+    fd.write("  cat foo.s | %s --binary > foo.obj\n" % exe)
     fd.write("  cat foo.s | %s --binary | hexdump -C\n" % exe)
     fd.write('\n')
     fd.write('Stop after lexing foo.s into tokens (JSON output):\n')
@@ -49,8 +49,8 @@ def usage(fd):
     fd.write('\n')
     fd.write('Assume input has already been parsed (JSON):\n')
     fd.write('(Useful for developing your own custom assembler syntax)\n')
-    fd.write("  cat foo.s | %s --parse | %s --json-input --binary > foo.bin\n" % (exe, exe))
-    fd.write("  ./my-custom-frontend foo.s | %s --json-input --binary > foo.bin\n" % exe)
+    fd.write("  cat foo.s | %s --parse | %s --json-input --binary > foo.obj\n" % (exe, exe))
+    fd.write("  ./my-custom-frontend foo.s | %s --json-input --binary > foo.obj\n" % exe)
     fd.write('\n')
     fd.write('Display this help message:\n')
     fd.write("  %s -h\n" % exe)
@@ -123,7 +123,6 @@ token_patterns = [
     ('HEX',        r'0?x[0-9a-fA-F]+'),
     ('NUMBER',     r'#?-?[0-9]+'),
     ('STRING',     r'"([^"\\]|\\.)*"'),
-    ('OPCODE',     r'(?i)ADD|AND|BRn?z?p?|JMP|JSRR|JSR|LDI|LDR|LD|LEA|NOT|RET|RTI|STI|STR|ST|TRAP'),
     ('DIRECTIVE',  r'(?i)\.ORIG|\.END|\.FILL|\.BLKW|\.STRINGZ'),
     ('REGISTER',   r'[rR][0-6]'),
     ('LABEL',      r'[a-zA-Z0-9_-]+:'),
@@ -136,6 +135,7 @@ token_patterns = \
 def lex_line(line):
     """Turns the line of text into a list of tokens."""
     tokens = []
+    opcode_regex = re.compile(r'(?i)(ADD|AND|BRn?z?p?|JMP|JSRR|JSR|LDI|LDR|LD|LEA|NOT|RET|RTI|STI|STR|ST|TRAP|GETC|HALT|IN|OUT|PUTSP|PUTS)$')
     i = 0
     while i < len(line):
         token = None
@@ -155,6 +155,10 @@ def lex_line(line):
             elif token_type == 'STRING':
                 # thanks to https://stackoverflow.com/a/1885211/558735
                 token.value = ast.literal_eval(text)
+            elif token_type == 'IDENTIFIER':
+                if opcode_regex.match(text):
+                    # if a whole word matches the OPCODE regex, then it is an OPCODE.
+                    token.token_type = 'OPCODE'
             tokens.append(token)
             i += len(text)
             break
@@ -643,13 +647,23 @@ def parse_TRAP_ins(tokens):
     assert len(tokens) > 0
     token1 = tokens[0]
     op = token1.text
-    if op.upper() != 'TRAP':
+    if op.upper() not in ['TRAP', 'GETC', 'HALT', 'IN', 'OUT', 'PUTS', 'PUTSP']:
         return failure
     statement = Obj()
     statement.type = 'STATEMENT'
     statement.statement_type = 'INSTRUCTION'
     statement.instruction = 'TRAP'
-    operands = parse_operands_trapvector8(tokens[1:])
+    vectors = {
+        'GETC': 32, 'HALT': 37, 'IN': 35, 'OUT': 33, 'PUTS': 34, 'PUTSP': 36
+    }
+    if op.upper() in vectors:
+        operand = Obj()
+        operand.type = 'OPERAND'
+        operand.operand_type = 'IMMEDIATE'
+        operand.value = vectors[op.upper()]
+        operands = [operand]
+    else:
+        operands = parse_operands_trapvector8(tokens[1:])
     if operands:
         statement.operands = operands
         return statement
@@ -819,9 +833,9 @@ def size_of_ins(statement):
         elif statement.directive_type == 'BLKW':
             return statement.size
         elif statement.directive_type == 'STRINGZ':
-            byte_count = len(statement.value) + 1
-            word_count = int(byte_count / 2)
-            return word_count
+            # Note: strings are packed as one char per 16-bit word, so the
+            # number of words is the number of characters.
+            return len(statement.value) + 1
     return None
 
 def make_symbol_table(statements):
@@ -1237,22 +1251,15 @@ def assemble_statement(statement, symtable, pc):
                 bmins.append(0)
                 return bmins
         elif statement.directive_type == 'STRINGZ':
+            # Note: strings are packed as one char per 16-bit word.
+            # "ABC" is 0x0041 0x0042 0x0043 0x0000.
             bmins = []
             chars = statement.value
             i = 0
             # pack two chars into each "instruction".
-            while len(chars) - i >= 2:
-                bmin = ord(chars[i]) << 8 | ord(chars[i+1]) << 0
-                bmins.append(bmin)
-                i += 2
-            if i == 0:
-                # we had an even number of chars.  append the terminating NULL.
-                bmins.append(0)
-            elif i == 1:
-                # we had an odd number of chars.  append the last straggler
-                # along with a terminating NULL.
-                bmin = ord(chars[i]) << 8 | 0x0 << 0
-                bmins.append(bmin)
+            for ch in chars:
+                bmins.append(ord(ch))
+            bmins.append(0)
             return bmins
     raise Exception("Don't know how to assemble: %s" % statement)
 
@@ -1319,9 +1326,9 @@ def parse_args():
     if job.infile is not None:
         if job.output_format is None:
             job.output_format = 'BINARY'
-            job.outfile = job.infile.rsplit('.', 1)[0] + '.bin'
+            job.outfile = job.infile.rsplit('.', 1)[0] + '.obj'
         elif job.output_format == 'BINARY':
-            job.outfile = job.infile.rsplit('.', 1)[0] + '.bin'
+            job.outfile = job.infile.rsplit('.', 1)[0] + '.obj'
         else:
             job.outfile = None
     else:

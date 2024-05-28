@@ -1,6 +1,6 @@
 .ORIG x3000
-LEA R0, prompt1
+LEA R0, message
 PUTS
 HALT
-prompt1	.STRINGZ "Hello World!"
+message .STRINGZ "Hello World!"
 .END
